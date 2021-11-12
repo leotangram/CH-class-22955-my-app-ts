@@ -1,26 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+// Inicio del código
+import { useState } from "react";
+import Form from "./components/Form";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+type FormData = {
+  name: string;
+  surname: string;
+  age: string;
+};
+
+export default function App() {
+  const [user, setUser] = useState<FormData>({
+    name: "",
+    surname: "",
+    age: "",
+  });
+
+  const { age, surname, name } = user;
+
+  const handleChange = (event: any) => {
+    setUser({
+      ...user,
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  const onSubmit = (event: any) => {
+    event.preventDefault();
+    console.log(`Your name is ${name} ${surname} and you have ${age} years`);
+  };
+
+  return <Form {...user} handleChange={handleChange} onSubmit={onSubmit} />;
 }
-
-export default App;
